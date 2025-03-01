@@ -1,5 +1,15 @@
 # https://github.com/LierB/dotfiles/
 
+requiredpacks ()
+{
+pacman -S git zsh kitty waybar hyprlock wofi btop pavucontrol blueman networkmanager nm-connection-editor imagemagick
+yay -S hyprland
+yay -S python-pywal
+yay -S wlogout
+yay -S swww
+yay -S grimblast-git
+
+}
 if [[ "${UID}" != 0 ]] ; then
 	echo -e "please run this script as with root privileges:\n\tsudo sh ./install.sh"
 	exit 1
@@ -24,20 +34,20 @@ cp -r /home/$USER/.config/btop/ /home/$USER/.config/cava/ /home/$USER/.config/fa
 cp -r /home/$USER/.zshrc Backup/
 
 echo -e '\e[1;34m Installing required packages\033[0m'
-pacman -S git zsh kitty waybar hyprlock wofi btop pavucontrol blueman networkmanager nm-connection-editor imagemagick
-mkdir appsmake
-cd appsmake
-git clone https://aur.archlinux.org/python-pywal.git && cd python-pywal && makepkg -si && cd ..
-git clone https://aur.archlinux.org/wlogout.git && cd wlogout && makepkg -si && cd ..
-git clone https://aur.archlinux.org/swww.git && cd swww && makepkg -si && cd .. 
-git clonehttps://aur.archlinux.org/grimblast-git.git && cd grimblast-git && makepkg -si && cd .. && cd..
+if ! command -v yay
+then
+    	clear
+    	echo -e "\033[1;31m
+Yay Not Found!\033[0m"
+exit 1
+fi
+requiredpacks
 
 echo -e '\e[1;34m Installing optional packages\033[0m'
 pacman -S fastfetch neofetch zathura zoxide
-cd appsmake
-git clone https://aur.archlinux.org/cava.git && cd cava && makepkg -si && cd .. 
-git clone https://aur.archlinux.org/tty-clock.git && cd tty-clock && makepkg -si && cd .. 
-git clone https://aur.archlinux.org/snake.git && cd snake && makepkg -si && cd .. && cd ..
+yay -S cava
+yay -S tty-clock.git
+yay -S snake.git
 
 echo -e '\e[1;34mCopying config files...\033[0m'
 rm -r /home/$USER/.zshrc
@@ -59,13 +69,14 @@ cp -r /home/$USER/.config/btop/ /home/$USER/.config/cava/ /home/$USER/.config/fa
 cp -r /home/$USER/.zshrc Backup/
 
 echo -e '\e[1;34m Installing required packages\033[0m'
-pacman -S git zsh kitty waybar hyprlock wofi btop pavucontrol blueman networkmanager nm-connection-editor imagemagick
-mkdir appsmake
-cd appsmake
-git clone https://aur.archlinux.org/python-pywal.git && cd python-pywal && makepkg -si && cd ..
-git clone https://aur.archlinux.org/wlogout.git && cd wlogout && makepkg -si && cd ..
-git clone https://aur.archlinux.org/swww.git && cd swww && makepkg -si && cd .. 
-git clonehttps://aur.archlinux.org/grimblast-git.git && cd grimblast-git && makepkg -si && cd .. && cd..
+if ! command -v yay
+then
+    	clear
+    	echo -e "\033[1;31m
+Yay Not Found!\033[0m"
+exit 1
+fi
+requiredpacks
 
 echo -e '\e[1;34mCopying config files...\033[0m'
 rm -r /home/$USER/.zshrc
